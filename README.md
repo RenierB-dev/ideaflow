@@ -219,14 +219,120 @@ The platform is **fully functional** with:
 ✅ API routes for data operations
 ✅ Responsive design
 
+## 🚀 Deployment
+
+### Deploy to Vercel (Recommended)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/ideaflow)
+
+#### Quick Deploy Steps:
+
+1. **Click the Deploy button above** or go to [Vercel](https://vercel.com)
+
+2. **Import your repository** and click "Deploy"
+
+3. **Configure Environment Variables** in Vercel Dashboard → Settings → Environment Variables:
+   - Copy all variables from `.env.example`
+   - Add your actual API keys and credentials
+   - See detailed setup guide below
+
+4. **Deploy!** Vercel will automatically build and deploy your app
+
+### Environment Setup Guide
+
+#### 1. Supabase Setup (5 minutes)
+1. Go to [Supabase](https://supabase.com) and create a new project
+2. Navigate to **Settings → API**
+3. Copy:
+   - Project URL → `NEXT_PUBLIC_SUPABASE_URL`
+   - `anon/public` key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `service_role` key → `SUPABASE_SERVICE_ROLE_KEY`
+4. Go to **SQL Editor** and run the schema from `lib/supabase/schema.sql`
+
+#### 2. Anthropic API (2 minutes)
+1. Go to [Anthropic Console](https://console.anthropic.com/)
+2. Create an API key
+3. Copy to `ANTHROPIC_API_KEY`
+
+#### 3. Reddit API (5 minutes)
+1. Go to [Reddit Apps](https://www.reddit.com/prefs/apps)
+2. Click "Create App" or "Create Another App"
+3. Fill in:
+   - **Name**: IdeaFlow
+   - **Type**: Script
+   - **Redirect URI**: http://localhost:3000
+4. Copy:
+   - App ID (under name) → `REDDIT_CLIENT_ID`
+   - Secret → `REDDIT_CLIENT_SECRET`
+
+#### 4. Stripe Setup (10 minutes)
+1. Go to [Stripe Dashboard](https://dashboard.stripe.com/)
+2. Navigate to **Developers → API Keys**
+3. Copy:
+   - Publishable key → `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+   - Secret key → `STRIPE_SECRET_KEY`
+4. Create a Pro subscription product:
+   - **Products → Add Product**
+   - Name: "IdeaFlow Pro"
+   - Price: $19/month
+   - Copy Price ID → `STRIPE_PRO_PRICE_ID`
+5. Set up webhooks:
+   - **Developers → Webhooks → Add endpoint**
+   - URL: `https://your-domain.com/api/webhooks/stripe`
+   - Events: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`
+   - Copy webhook secret → `STRIPE_WEBHOOK_SECRET`
+
+#### 5. Resend Email (3 minutes)
+1. Go to [Resend](https://resend.com)
+2. Add and verify your domain
+3. Create an API key → `RESEND_API_KEY`
+4. Set `EMAIL_FROM` to your verified email (e.g., `hello@yourdomain.com`)
+
+#### 6. PostHog Analytics (2 minutes)
+1. Go to [PostHog](https://app.posthog.com)
+2. Create a project
+3. Copy Project API Key → `NEXT_PUBLIC_POSTHOG_KEY`
+
+### Production Checklist
+
+Before going live, ensure:
+
+- ✅ All environment variables are set in Vercel
+- ✅ Supabase database schema is migrated
+- ✅ Stripe products and webhooks are configured
+- ✅ Domain is verified in Resend
+- ✅ Reddit API credentials are working
+- ✅ Test a full user flow (signup → browse → upgrade)
+- ✅ Analytics are tracking correctly
+- ✅ Email templates render properly
+- ✅ Cron jobs are scheduled in Vercel
+- ✅ Privacy policy and terms are updated with your info
+- ✅ Custom domain is configured (Settings → Domains)
+
+### Monitoring & Maintenance
+
+- **Vercel Dashboard**: Monitor deployments, errors, and performance
+- **Supabase Dashboard**: Check database health and usage
+- **Stripe Dashboard**: Track revenue and subscriptions
+- **PostHog**: Analyze user behavior and conversion funnels
+- **Resend**: Monitor email delivery rates
+
+### Scaling Tips
+
+- Enable Vercel Pro for better performance and analytics
+- Upgrade Supabase plan when you hit free tier limits
+- Set up database indexes for faster queries
+- Implement caching for AI analyses
+- Use Vercel Edge Functions for global low-latency
+
 ## 🔄 Future Enhancements
 
-- [ ] User authentication
-- [ ] Save ideas functionality
-- [ ] AI pitch deck PDF generation
-- [ ] Real-time collaboration
-- [ ] Email alerts
-- [ ] Mobile app
+- [ ] Mobile app (React Native)
+- [ ] Browser extension for saving ideas
+- [ ] Team collaboration features
+- [ ] AI pitch deck PDF generation improvements
+- [ ] Integration with project management tools
+- [ ] Advanced analytics dashboard
 
 ## 📄 License
 
